@@ -14,3 +14,7 @@ li em {
   color: yellow;
   font-weight: bold;
 }
+
+footer:hover {
+  color: orange;
+}
