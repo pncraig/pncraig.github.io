@@ -19,6 +19,10 @@ function createBoard() {
     }
     tableBody.appendChild(tableRow);
   }
+
+  table.appendChild(tableBody);
+
+  document.body.appendChild(table);
 }
 
 function createCell() {
