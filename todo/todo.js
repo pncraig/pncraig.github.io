@@ -1,3 +1,8 @@
+// Get the submit button
+const button = document.getElementById("button");
+// Add the addItem() function as the event handler for the button
+button.addEventListener(addItem);
+
 function addItem() {
   // Get the ordered list element
   const ol = document.getElementById("ordered-list");
