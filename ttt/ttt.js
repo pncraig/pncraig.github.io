@@ -1,4 +1,10 @@
 
+const startGameButton = document.getElementById("start-game-button");
+
+startGameButton.addEventListener("click", createBoard);
+
+createBoard();
+
 function createBoard() {
   // Create the table element
   const table = document.createElement("table");
