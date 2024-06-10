@@ -7,7 +7,7 @@ button.addEventListener("click", addItem);
 // when the button is pressed
 function addItem() {
   // Get the ordered list element
-  const ol = document.getElementById("ordered-list");
+  const ol = document.getElementById("unordered-list");
   // Create a new list element to hold another item
   const li = document.createElement("li");
   // Access the text field element
