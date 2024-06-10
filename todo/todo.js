@@ -1,7 +1,7 @@
 // Get the submit button
 const button = document.getElementById("button");
 // Add the addItem() function as the event handler for the button
-button.addEventListener("clickl", addItem);
+button.addEventListener("click", addItem);
 
 function addItem() {
   // Get the ordered list element
