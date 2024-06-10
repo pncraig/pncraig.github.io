@@ -14,8 +14,13 @@ function addItem() {
   const item = textField.value;
   // Create a new text node that will become a child of the new list element
   const textNode = document.createTextNode(item);
+  // Create a checkbox input element
+  const check = document.createElement("input");
+  check.setAttribute("type", "checkbox");
   // Add the text node as the child of the list element
   li.appendChild(textNode);
+  // Add the checkbox as a child of the list element
+  li.appendChild(check);
   // Append the list item to the ordered list
   ol.appendChild(li);
   // Erase the text field
