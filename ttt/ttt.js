@@ -8,7 +8,7 @@ createBoard();
 
 function createBoard() {
   // Remove a board if it already exists
-  const oldBoard = document.getElementsByTag("table");
+  const oldBoard = document.getElementsByTagName("table");
   if (oldBoard.length != 0) {
     oldBoard[0].remove();
   }
