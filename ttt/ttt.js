@@ -1,5 +1,6 @@
 var isXsTurn = false;
-var tttBoard = getBoardArray();
+const PLAYER_CHAR = "X";
+const CPU_CHAR = "O";
 
 // Add event handler to the "start game button" so that every time
 // the button is clicked, a new game is started
@@ -15,7 +16,6 @@ function createBoard() {
   const oldBoard = document.getElementsByTagName("table");
   if (oldBoard.length != 0) {
     oldBoard[0].remove();
-    tttBoard = getBoardArray();
   }
   
   // Create the table element
@@ -39,29 +39,29 @@ function createBoard() {
 
 // Create a single square on the tic tac toe board
 function createCell(row, column) {
-  // Create an input element that is of type "button"
+  // Create an input element that is of type "button". The element
+  // has an id corresponding to its position on the board for easy access
   const button = document.createElement("input");
+  button.setAttribute("id", row + "-" + column);
   button.setAttribute("type", "button");
   button.setAttribute("value", " ");
 
   // This function is called when the buttons are clicked.
-  // They change the character that is displayed
+  //  Only the human player can click a button, so put a 
+  // PLAYER_CHAR in that spot
   function cellClicked() {
-    if (isXsTurn) {
-      button.setAttribute("value", "X");
-      tttBoard[row][column] = "X";
-      isXsTurn = false;
-      console.log(checkBoard("X"));
-    } else {
-      button.setAttribute("value", "O");
-      tttBoard[row][column] = "O";
-      isXsTurn = true;
-      console.log(checkBoard("O"));
-    }
+    button.setAttribute("value", PLAYER_CHAR);
   }
 
-  // Add cellClicked() as an event listener for the button
+  // This function is called when the cpu chooses
+  // a position on the board
+  function cellPickedByCpu() {
+    button.setAttribute("value", CPU_CHAR);
+  }
+
+  // Add cellClicked() and cellPickedByCpu() as event listeners for the button
   button.addEventListener("click", cellClicked);
+  button.addEventListener("cpu", cellPickedByCpu);
 
   // Wrap the button in a tabular data element
   const tabularData = document.createElement("td");
@@ -75,28 +75,24 @@ function checkBoard(playerChar) {
   let row = playerChar + playerChar + playerChar;
   // Check rows
   for (var r = 0; r < 3; r++) {
-    if ((tttBoard[r][0] + tttBoard[r][1] + tttBoard[r][2]) === row) {
+    if ((getCellValue(r, 0) + getCellValue(r, 1) + getCellValue(r, 2)) === row) {
       return true;
     }
   }
 
   // Check columns
   for (var c = 0; c < 3; c++) {
-    if ((tttBoard[0][c] + tttBoard[1][c] + tttBoard[2][c]) === row) {
+    if ((getCellValue(0, c) + getCellValue(1, c) + getCellValue(1, c)) === row) {
       return true;
     }
   }
 
   // Check diagonals
-  return (tttBoard[0][0] + tttBoard[1][1] + tttBoard[2][2]) === row ||
-         (tttBoard[0][2] + tttBoard[1][1] + tttBoard[2][0]) === row;
+  return (getCellValue(0, 0) + getCellValue(1, 1) + getCellValue(2, 2)) === row ||
+         (getCellValue(0, 2) + getCellValue(1, 1) + getCellValue(2, 0)) === row;
 }
 
-// Get a 2d array representing an empty board
-function getBoardArray() {
-  return [
-    [" ", " ", " "],
-    [" ", " ", " "],
-    [" ", " ", " "]
-  ];
+// Get the value of a cell at a specific location
+function getCellValue(row, column) {
+  return document.getElementById(row + "-" + column).getAttribute("value");
 }
