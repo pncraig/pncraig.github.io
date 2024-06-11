@@ -51,10 +51,12 @@ function createCell(row, column) {
       button.setAttribute("value", "X");
       tttBoard[row][column] = "X";
       isXsTurn = false;
+      console.log(checkBoard("X"));
     } else {
       button.setAttribute("value", "O");
       tttBoard[row][column] = "O";
       isXsTurn = true;
+      console.log(checkBoard("O"));
     }
   }
 
@@ -70,7 +72,24 @@ function createCell(row, column) {
 
 // Check if a player has three in a row
 function checkBoard(playerChar) {
-  
+  let row = playerChar + playerChar + playerChar;
+  // Check rows
+  for (var r = 0; r < 3; r++) {
+    if ((tttBoard[r][0] + tttBoard[r][1] + tttBoard[r][2]) === row) {
+      return true;
+    }
+  }
+
+  // Check columns
+  for (var c = 0; c < 3; c++) {
+    if ((tttBoard[0][c] + tttBoard[1][c] + tttBoard[2][c]) === row) {
+      return true;
+    }
+  }
+
+  // Check diagonals
+  return (tttBoard[0][0] + tttBoard[1][1] + tttBoard[2][2]) === row ||
+         (tttBoard[0][2] + tttBoard[1][1] + tttBoard[2][0]) === row;
 }
 
 // Get a 2d array representing an empty board
