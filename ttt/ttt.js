@@ -51,6 +51,8 @@ function createCell(row, column) {
   // PLAYER_CHAR in that spot
   function cellClicked() {
     button.setAttribute("value", PLAYER_CHAR);
+    // Call the cpu to make its move
+    cpuMove();
   }
 
   // This function is called when the cpu chooses
@@ -90,6 +92,19 @@ function checkBoard(playerChar) {
   // Check diagonals
   return (getCellValue(0, 0) + getCellValue(1, 1) + getCellValue(2, 2)) === row ||
          (getCellValue(0, 2) + getCellValue(1, 1) + getCellValue(2, 0)) === row;
+}
+
+// Function that chooses where the cpu will play
+function cpuMove() {
+  let row = Math.floor(Math.random() * 3);
+  let col = Math.floor(Math.random() * 3);
+  const pos = {
+    row: row,
+    column: col,
+  };
+  const event = new CustomEvent("cpu", pos);
+  // Send the event to the button
+  document.getElementById(row + "-" + col).dispatchEvent();
 }
 
 // Get the value of a cell at a specific location
