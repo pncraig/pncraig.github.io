@@ -131,6 +131,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
     for (let c = 0; c < 3; c++) {
       if (isCellUnoccupied(r, c)) {
         let newBoard = board.map((x) => x.map((x) => x));
+        console.log(newBoard);
         newBoard[r][c] = currentPlayer;
         score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
       }
