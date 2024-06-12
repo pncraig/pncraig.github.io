@@ -57,8 +57,7 @@ function createCell(row, column) {
 
   // Add cellClicked() and cellPickedByCpu() as event listeners for the button
   button.addEventListener("click", cellClicked);
-  button.addEventListener("cpu", cellPickedByCpu);
-
+  
   // Wrap the button in a tabular data element
   const tabularData = document.createElement("td");
   tabularData.appendChild(button);
