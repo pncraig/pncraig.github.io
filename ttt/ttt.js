@@ -114,7 +114,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   let currentPlayerWon = checkBoard(currentPlayer);
   let boardFull = isBoardFull();
 
-  if (mainPlayerWon || (currentPlayer == mainPlayer && currentPlayerWon) {
+  if (mainPlayerWon || (currentPlayer == mainPlayer && currentPlayerWon)) {
       return 1;
   }
 
