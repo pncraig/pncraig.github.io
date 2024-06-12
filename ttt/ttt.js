@@ -91,14 +91,19 @@ function checkBoard(playerChar) {
 function cpuMove() {
   let row = Math.floor(Math.random() * 3);
   let col = Math.floor(Math.random() * 3);
-  const pos = {
-    row: row,
-    column: col,
-  };
-  document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
+  if (isCellUnoccupied(row, col)) {
+    document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
+    return;
+  }
+  cpuMove();
 }
 
 // Get the value of a cell at a specific location
 function getCellValue(row, column) {
   return document.getElementById(row + "-" + column).getAttribute("value");
+}
+
+// Returns true if the cell is unoccupied, false otherwise
+function isCellUnoccupied(row, column) {
+  return getCellValue(row, column) == " ";
 }
