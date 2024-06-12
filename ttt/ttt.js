@@ -55,12 +55,6 @@ function createCell(row, column) {
     cpuMove();
   }
 
-  // This function is called when the cpu chooses
-  // a position on the board
-  function cellPickedByCpu() {
-    button.setAttribute("value", CPU_CHAR);
-  }
-
   // Add cellClicked() and cellPickedByCpu() as event listeners for the button
   button.addEventListener("click", cellClicked);
   button.addEventListener("cpu", cellPickedByCpu);
@@ -102,9 +96,7 @@ function cpuMove() {
     row: row,
     column: col,
   };
-  const event = new CustomEvent("cpu", pos);
-  // Send the event to the button
-  document.getElementById(row + "-" + col).dispatchEvent();
+  document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
 }
 
 // Get the value of a cell at a specific location
