@@ -89,13 +89,9 @@ function checkBoard(playerChar) {
 
 // Function that chooses where the cpu will play
 function cpuMove() {
-  let row = Math.floor(Math.random() * 3);
-  let col = Math.floor(Math.random() * 3);
-  if (isCellUnoccupied(row, col)) {
-    document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
-    return;
-  }
-  cpuMove();
+  let row;
+  let col;
+  console.log(boardToArray());
 }
 
 // Get the value of a cell at a specific location
@@ -106,4 +102,16 @@ function getCellValue(row, column) {
 // Returns true if the cell is unoccupied, false otherwise
 function isCellUnoccupied(row, column) {
   return getCellValue(row, column) == " ";
+}
+
+// Returns the tic tac toe board as a 2d array of characters
+function boardToArray() {
+  let board = [];
+  for (var r = 0; r < 3; r++) {
+    board.push([]);
+    for (var c = 0; c < 3; c++) {
+      board[r].push(getCellValue(r, c));
+    }
+  }
+  return board;
 }
