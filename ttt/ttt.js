@@ -24,9 +24,9 @@ function createBoard() {
   const tableBody = document.createElement("tbody");
 
   // Create the tic tac toe board
-  for (var i = 0; i < 3; i++) {
+  for (let i = 0; i < 3; i++) {
     const tableRow = document.createElement("tr");
-    for (var j = 0; j < 3; j++) {
+    for (let j = 0; j < 3; j++) {
       tableRow.appendChild(createCell(i, j));
     }
     tableBody.appendChild(tableRow);
@@ -69,14 +69,14 @@ function createCell(row, column) {
 function checkBoard(playerChar) {
   let row = playerChar + playerChar + playerChar;
   // Check rows
-  for (var r = 0; r < 3; r++) {
+  for (let r = 0; r < 3; r++) {
     if ((getCellValue(r, 0) + getCellValue(r, 1) + getCellValue(r, 2)) === row) {
       return true;
     }
   }
 
   // Check columns
-  for (var c = 0; c < 3; c++) {
+  for (let c = 0; c < 3; c++) {
     if ((getCellValue(0, c) + getCellValue(1, c) + getCellValue(1, c)) === row) {
       return true;
     }
@@ -91,7 +91,51 @@ function checkBoard(playerChar) {
 function cpuMove() {
   let row;
   let col;
-  console.log(boardToArray());
+  let maxScore = -Infinity;
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 3; c++) {
+      if (isCellUnoccupied(r, c)) {
+        let board = boardToArray();
+        board[r][c] = CPU_CHAR;
+        let score = evaluateBoard(board, CPU_CHAR, PLAYER_CHAR, CPU_CHAR);
+        if (score > maxScore) {
+          row = r;
+          col = c;
+          maxScore = score;
+        }
+      }
+    }
+  }
+  document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
+}
+
+function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
+  let mainPlayerWon = checkBoard(mainPlayer);
+  let currentPlayerWon = checkBoard(currentPlayer);
+  let boardFull = isBoardFull();
+
+  if (mainPlayerWon || (currentPlayer == mainPlayer && currentPlayerWon) {
+      return 1;
+  }
+
+  if (currentPlayerWon) {
+    return -1;
+  }
+
+  if (boardFull) {
+    return 0;
+  }
+  
+  let score = 0;
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 3; c++) {
+      if (isCellUnoccupied(r, c)) {
+        let newBoard = board.map((x) => x);
+        newBoard[r][c] = currentPlayer;
+        score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
+      }
+    }
+  }
 }
 
 // Get the value of a cell at a specific location
@@ -104,12 +148,24 @@ function isCellUnoccupied(row, column) {
   return getCellValue(row, column) == " ";
 }
 
+// Returns true if the board is completely full
+function isBoardFull() {
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 3; c++) {
+      if (getCellValue(r, c) == " ") {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 // Returns the tic tac toe board as a 2d array of characters
 function boardToArray() {
   let board = [];
-  for (var r = 0; r < 3; r++) {
+  for (let r = 0; r < 3; r++) {
     board.push([]);
-    for (var c = 0; c < 3; c++) {
+    for (let c = 0; c < 3; c++) {
       board[r].push(getCellValue(r, c));
     }
   }
