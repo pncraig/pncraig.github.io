@@ -130,7 +130,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
       if (isCellUnoccupied(r, c)) {
-        let newBoard = board.map((x) => x);
+        let newBoard = board.map((x) => x.map((x) => x));
         newBoard[r][c] = currentPlayer;
         score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
       }
