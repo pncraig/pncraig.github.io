@@ -129,7 +129,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   let score = 0;
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      if (isCellUnoccupied(r, c)) {
+      if (board[r][c] == " ") {
         let newBoard = board.map((x) => x.map((x) => x));
         console.log(newBoard);
         newBoard[r][c] = currentPlayer;
