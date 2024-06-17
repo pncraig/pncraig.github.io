@@ -1,6 +1,7 @@
 var isXsTurn = false;
 const PLAYER_CHAR = "X";
 const CPU_CHAR = "O";
+const EMPTY_CHAR = " ";
 
 // Add event handler to the "start game button" so that every time
 // the button is clicked, a new game is started
@@ -44,7 +45,7 @@ function createCell(row, column) {
   const button = document.createElement("input");
   button.setAttribute("id", row + "-" + column);
   button.setAttribute("type", "button");
-  button.setAttribute("value", " ");
+  button.setAttribute("value", EMPTY_CHAR);
 
   // This function is called when the buttons are clicked.
   //  Only the human player can click a button, so put a 
@@ -66,25 +67,25 @@ function createCell(row, column) {
 }
 
 // Check if a player has three in a row
-function checkBoard(playerChar) {
+function checkBoard(snapshot, playerChar) {
   let row = playerChar + playerChar + playerChar;
   // Check rows
   for (let r = 0; r < 3; r++) {
-    if ((getCellValue(r, 0) + getCellValue(r, 1) + getCellValue(r, 2)) === row) {
+    if ((snapshot[r][0] + snapshot[r][1] + snapshot[r][2]) === row) {
       return true;
     }
   }
 
   // Check columns
   for (let c = 0; c < 3; c++) {
-    if ((getCellValue(0, c) + getCellValue(1, c) + getCellValue(1, c)) === row) {
+    if ((snapshot[0][c] + snapshot[1][c] + snapshot[2][c]) === row) {
       return true;
     }
   }
 
   // Check diagonals
-  return (getCellValue(0, 0) + getCellValue(1, 1) + getCellValue(2, 2)) === row ||
-         (getCellValue(0, 2) + getCellValue(1, 1) + getCellValue(2, 0)) === row;
+  return (snapshot[0][0] + snapshot[1][1] + snapshot[2][2]) === row ||
+         (snapshot[0][2] + snapshot[1][1] + snapshot[2][0]) === row;
 }
 
 // Function that chooses where the cpu will play
@@ -94,7 +95,7 @@ function cpuMove() {
   let maxScore = -Infinity;
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      if (isCellUnoccupied(r, c)) {
+      if (isCellUnoccupied(boardToArray(), r, c)) {
         let board = boardToArray();
         board[r][c] = CPU_CHAR;
         let score = evaluateBoard(board, CPU_CHAR, PLAYER_CHAR, CPU_CHAR);
@@ -110,9 +111,9 @@ function cpuMove() {
 }
 
 function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
-  let mainPlayerWon = checkBoard(mainPlayer);
-  let currentPlayerWon = checkBoard(currentPlayer);
-  let boardFull = isBoardFull();
+  let mainPlayerWon = checkBoard(board, mainPlayer);
+  let currentPlayerWon = checkBoard(board, currentPlayer);
+  let boardFull = isBoardFull(board);
 
   if (mainPlayerWon || (currentPlayer == mainPlayer && currentPlayerWon)) {
       return 1;
@@ -129,7 +130,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   let score = 0;
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      if (board[r][c] == " ") {
+      if (board[r][c] == EMPTY_CHAR) {
         let newBoard = board.map((arr) => arr.slice());
         console.log(newBoard);
         newBoard[r][c] = currentPlayer;
@@ -145,15 +146,15 @@ function getCellValue(row, column) {
 }
 
 // Returns true if the cell is unoccupied, false otherwise
-function isCellUnoccupied(row, column) {
-  return getCellValue(row, column) == " ";
+function isCellUnoccupied(snapshot, row, column) {
+  return snapshot[r][c] == EMPTY_CHAR;
 }
 
 // Returns true if the board is completely full
-function isBoardFull() {
+function isBoardFull(snapshot) {
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      if (getCellValue(r, c) == " ") {
+      if (snapShot[r][c] == EMPTY_CHAR) {
         return false;
       }
     }
