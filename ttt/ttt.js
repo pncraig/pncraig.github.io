@@ -126,15 +126,18 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   if (boardFull) {
     return 0;
   }
+
+  return 0;
   
   let score = 0;
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
       if (board[r][c] == EMPTY_CHAR) {
         let newBoard = board.map((arr) => arr.slice());
-        console.log(newBoard);
+        
         newBoard[r][c] = currentPlayer;
         score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
+        console.log({"Score": score, "Board": board});
       }
     }
   }
