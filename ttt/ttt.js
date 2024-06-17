@@ -130,7 +130,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
       if (board[r][c] == " ") {
-        let newBoard = board.map((x) => x.map((x) => x));
+        let newBoard = board.map((arr) => arr.slice());
         console.log(newBoard);
         newBoard[r][c] = currentPlayer;
         score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
