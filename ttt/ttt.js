@@ -147,7 +147,7 @@ function getCellValue(row, column) {
 
 // Returns true if the cell is unoccupied, false otherwise
 function isCellUnoccupied(snapshot, row, column) {
-  return snapshot[r][c] == EMPTY_CHAR;
+  return snapshot[row][column] == EMPTY_CHAR;
 }
 
 // Returns true if the board is completely full
