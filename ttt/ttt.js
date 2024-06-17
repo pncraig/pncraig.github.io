@@ -138,6 +138,8 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
       }
     }
   }
+
+  return score;
 }
 
 // Get the value of a cell at a specific location
