@@ -90,8 +90,8 @@ function checkBoard(snapshot, playerChar) {
 
 // Function that chooses where the cpu will play
 function cpuMove() {
-  let row;
-  let col;
+  let row = 0;
+  let col = 0;
   let maxScore = -Infinity;
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
