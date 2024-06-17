@@ -115,7 +115,7 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   let currentPlayerWon = checkBoard(board, currentPlayer);
   let boardFull = isBoardFull(board);
 
-  if (mainPlayerWon || (currentPlayer == mainPlayer && currentPlayerWon)) {
+  if (mainPlayerWon) {
       return 1;
   }
 
@@ -126,15 +126,12 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
   if (boardFull) {
     return 0;
   }
-
-  return 0;
   
   let score = 0;
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      if (board[r][c] == EMPTY_CHAR) {
+      if (isCellUnoccupied(board, r, c)) {
         let newBoard = board.map((arr) => arr.slice());
-        
         newBoard[r][c] = currentPlayer;
         score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
         console.log({"Score": score, "Board": board});
