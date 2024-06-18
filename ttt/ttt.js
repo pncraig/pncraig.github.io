@@ -107,6 +107,7 @@ function cpuMove() {
       }
     }
   }
+  console.log({"row": row, "col": col, "score": maxScore});
   document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
 }
 
@@ -134,7 +135,6 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
         let newBoard = board.map((arr) => arr.slice());
         newBoard[r][c] = currentPlayer;
         score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
-        console.log({"Score": score, "Board": board});
       }
     }
   }
