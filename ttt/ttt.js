@@ -51,9 +51,22 @@ function createCell(row, column) {
   //  Only the human player can click a button, so put a 
   // PLAYER_CHAR in that spot
   function cellClicked() {
+    // Let the player make their move
     button.setAttribute("value", PLAYER_CHAR);
+    if (checkBoard(boardToArray(), PLAYER_CHAR) {
+      resetVictoryMessage();
+      setVictoryMessage(PLAYER_CHAR);
+      createBoard();
+      return;
+    }
     // Call the cpu to make its move
     cpuMove();
+    if (checkBoard(boardToArray(), CPU_CHAR)) {
+      resetVictoryMessage();
+      setVictoryMessage(CPU_CHAR);
+      createBoard();
+      return;
+    }
   }
 
   // Add cellClicked() and cellPickedByCpu() as event listeners for the button
@@ -174,4 +187,17 @@ function boardToArray() {
     }
   }
   return board;
+}
+
+function setVictoryMessage(char) {
+  const victoryMessage = document.createTextNode("Player " + char + " won!!");
+  const h2 = document.createElement("h2");
+  h2.setAttribute("id", "victory-message");
+  h2.appendChild(victoryMessage);
+  document.body.appendChild(h2);
+}
+
+function resetVictoryMessage() {
+  const victoryMessage = document.getElementById("victory-message");
+  victoryMessage.remove();
 }
