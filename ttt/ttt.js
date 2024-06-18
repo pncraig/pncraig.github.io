@@ -53,7 +53,7 @@ function createCell(row, column) {
   function cellClicked() {
     // Let the player make their move
     button.setAttribute("value", PLAYER_CHAR);
-    if (checkBoard(boardToArray(), PLAYER_CHAR) {
+    if (checkBoard(boardToArray(), PLAYER_CHAR)) {
       resetVictoryMessage();
       setVictoryMessage(PLAYER_CHAR);
       createBoard();
