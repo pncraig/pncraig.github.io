@@ -54,7 +54,7 @@ function createCell(row, column) {
     // Let the player make their move
     button.setAttribute("value", PLAYER_CHAR);
     if (checkBoard(boardToArray(), PLAYER_CHAR)) {
-      resetVictoryMessage();
+      //resetVictoryMessage();
       setVictoryMessage(PLAYER_CHAR);
       createBoard();
       return;
@@ -62,7 +62,7 @@ function createCell(row, column) {
     // Call the cpu to make its move
     cpuMove();
     if (checkBoard(boardToArray(), CPU_CHAR)) {
-      resetVictoryMessage();
+      //resetVictoryMessage();
       setVictoryMessage(CPU_CHAR);
       createBoard();
       return;
@@ -103,6 +103,11 @@ function checkBoard(snapshot, playerChar) {
 
 // Function that chooses where the cpu will play
 function cpuMove() {
+  let history = {
+    board: boardToArray(),
+    score: 0,
+    nextMoves: new Array(),
+  };
   let row = 0;
   let col = 0;
   let maxScore = -Infinity;
@@ -111,7 +116,7 @@ function cpuMove() {
       if (isCellUnoccupied(boardToArray(), r, c)) {
         let board = boardToArray();
         board[r][c] = CPU_CHAR;
-        let score = evaluateBoard(board, CPU_CHAR, PLAYER_CHAR, CPU_CHAR);
+        let score = evaluateBoard(board, PLAYER_CHAR, CPU_CHAR, CPU_CHAR, history);
         if (score > maxScore) {
           row = r;
           col = c;
@@ -120,24 +125,36 @@ function cpuMove() {
       }
     }
   }
-  console.log({"row": row, "col": col, "score": maxScore});
+  history.score = maxScore;
+  console.log(history);
   document.getElementById(row + "-" + col).setAttribute("value", CPU_CHAR);
 }
 
-function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
+function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer, prevHistory) {
+  let history = {
+    board: board,
+    score: 0,
+    nextMoves: new Array(),
+  };
+  
+  prevHistory.nextMoves.push(history);
+  
   let mainPlayerWon = checkBoard(board, mainPlayer);
   let currentPlayerWon = checkBoard(board, currentPlayer);
   let boardFull = isBoardFull(board);
 
   if (mainPlayerWon) {
+    history.score = 1;
       return 1;
   }
 
   if (currentPlayerWon) {
+    history.score = -1;
     return -1;
   }
 
   if (boardFull) {
+    history.score = 0;
     return 0;
   }
   
@@ -147,11 +164,11 @@ function evaluateBoard(board, currentPlayer, nextPlayer, mainPlayer) {
       if (isCellUnoccupied(board, r, c)) {
         let newBoard = board.map((arr) => arr.slice());
         newBoard[r][c] = currentPlayer;
-        score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer);
+        score += evaluateBoard(newBoard, nextPlayer, currentPlayer, mainPlayer, history);
       }
     }
   }
-
+  history.score = score;
   return score;
 }
 
